@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from analyser import Analyser
+from sbcalc import Analyser
 
 def test_circular_analyser():
     #isotropic model

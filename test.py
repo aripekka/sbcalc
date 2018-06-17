@@ -1,8 +1,8 @@
-from lateral_deformation import *
+from sbcacl.lateral_deformation import *
 import matplotlib.pyplot as plt
 
-
 def test_isotropic_circular():
+
     X,Y,stress,strain = isotropic_circular(1,0.1,0.27,165)
 
     plt.figure()
@@ -93,5 +93,3 @@ def test_anisotropic_circular():
 
     plt.colorbar()
     plt.show()
-
-def test_isotropic_circular():

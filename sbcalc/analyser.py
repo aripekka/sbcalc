@@ -4,9 +4,9 @@ import numpy as np
 from pyTTE import takagitaupin
 from pyTTE.deformation import isotropic_plate, anisotropic_plate
 
-import lateral_deformation
-import crystal
-from johann_error import johann_error
+from . import lateral_deformation
+from . import crystal
+from .johann_error import johann_error
 
 class Analyser:
     '''

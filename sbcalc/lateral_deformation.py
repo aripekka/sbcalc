@@ -107,3 +107,51 @@ def anisotropic_circular(R,L,S):
         strain[k][X**2+Y**2 > L**2/4] = np.nan
 
     return X,Y,stress,strain
+
+def isotropic_rectangular(R,a,b,nu=0.27,E=165):
+    '''
+    Computes the lateral stress and strain tensors for isotropic rectangular
+    SBCA.
+
+    Input:
+    R = bending radius
+    a, b = side lengths of the rectangle
+    nu = Poisson's ratio
+    E = Young's modulus
+
+    The units of R and L do not matter, as long as they are the same. Same for
+    E but the choice fixes the units of the computed stress tensor
+
+    Output:
+    X, Y = 2D matrices giving the coordinates of the surface points
+           X-axis is parallel with the side a and y-axis with b
+    stress = The components of the stress tensor
+    strain = The components of the strain tensor
+
+    Note: stress and strain matrices contain nan for the points outside the
+    crystal surface.
+    '''
+    #resize grid points according to the linear dimensions so the separation
+    #of the grid points is equal in x and y directions
+    if a > b:
+        x=np.linspace(-a/2,a/2,N_GRID)
+        y=np.linspace(-b/2,b/2,int(np.round(N_GRID*b/a))
+    else:
+        y=np.linspace(-b/2,b/2,N_GRID)
+        x=np.linspace(-a/2,a/2,int(np.round(N_GRID*a/b))
+
+    X,Y=np.meshgrid(x,y)
+
+    stress = {}
+    strain = {}
+
+    g = 8 + 10*((a/b)**2+(b/a)**2) + (1-nu)*((a/b)**2-(b/a)**2)**2
+
+    stress['xx'] = E/(g*R**2) * (a**2/12-X**2 + ((1+nu)/2 + 5*(a/b)**2 + (1-nu)/2*(a/b)**4)*(b**2/12-Y**2))
+    stress['yy'] = E/(g*R**2) * (b**2/12-Y**2 + ((1+nu)/2 + 5*(b/a)**2 + (1-nu)/2*(b/a)**2)*(a**2/12-X**2))
+    stress['xy'] = 2*E/(g*R**2)*X*Y
+
+    strain['zz'] = nu/(g*R**2) * (((3+nu)/2+5*(b/a)**2+(1-nu)/2*(b/a)**4)*(X**2 - a**2/12)+\
+                                  ((3+nu)/2+5*(a/b)**2+(1-nu)/2*(a/b)**4)*(Y**2 - b**2/12))
+
+    return X,Y,stress,strain

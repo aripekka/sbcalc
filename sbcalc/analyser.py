@@ -204,8 +204,16 @@ class Analyser:
                area masked by 'False' entries are outcluded from the convolution.
         '''
 
+        if type(self.lateral_shifts) == type(None):
+            print('No lateral shifts found. Attempting to call compute_lateral_shifts()')
+            if self.scantype == None:
+                print('Warning! No 1D Takagi-Taupin solution found! Call compute_TT() first.')
+                return
+            else:
+                self.compute_lateral_shifts(include_johann_error=True)
+
         #apply possible mask and remove Nan values
-        if not mask == None:
+        if not type(mask) == type(None):
             shifts = self.lateral_shifts[mask]
         else:
             shifts = self.lateral_shifts

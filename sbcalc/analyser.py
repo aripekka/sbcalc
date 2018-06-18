@@ -68,7 +68,8 @@ class Analyser:
         #Init the analyser type
         if 'a' in kwargs and 'b' in kwargs:
             self.analyser_type = 'rectangular'
-            raise Exception('Rectangular wafer not implemented yet!')
+            self.a = kwargs['a']
+            self.b = kwargs['b']
         elif 'diameter' in kwargs:
             if 'strip_width' in kwargs:
                 self.analyser_type = 'stripbent'
@@ -82,6 +83,8 @@ class Analyser:
 
         #Init the theory
         if 'S' in kwargs:
+            if not self.analyser_type == 'circular':
+                Exception('Anisotropic theory compatible only with circular wafer!')
             self.theory = 'anisotropic'
             self.compliance_matrix = kwargs['S']
         elif 'nu' in kwargs and 'E' in kwargs:
@@ -106,7 +109,11 @@ class Analyser:
                                                        self.poisson_ratio,
                                                        self.young_modulus)
         elif self.analyser_type == 'rectangular':
-            raise Exception('Rectangular wafer not implemented yet!')
+            self.X, self.Y, self.stress, self.strain = \
+            lateral_deformation.isotropic_rectangular(self.R_bend*1e3,
+                                                   self.a, self.b,
+                                                   self.poisson_ratio,
+                                                   self.young_modulus)
         else:
             raise Exception('Strip-bent analyser not implemented yet!')
 

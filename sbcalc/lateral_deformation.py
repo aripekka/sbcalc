@@ -135,10 +135,10 @@ def isotropic_rectangular(R,a,b,nu=0.27,E=165):
     #of the grid points is equal in x and y directions
     if a > b:
         x=np.linspace(-a/2,a/2,N_GRID)
-        y=np.linspace(-b/2,b/2,int(np.round(N_GRID*b/a))
+        y=np.linspace(-b/2,b/2,int(np.round(N_GRID*b/a)))
     else:
         y=np.linspace(-b/2,b/2,N_GRID)
-        x=np.linspace(-a/2,a/2,int(np.round(N_GRID*a/b))
+        x=np.linspace(-a/2,a/2,int(np.round(N_GRID*a/b)))
 
     X,Y=np.meshgrid(x,y)
 

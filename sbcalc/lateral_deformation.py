@@ -45,6 +45,12 @@ def isotropic_circular(R,L,nu=0.27,E=165):
     strain['xx'] = ((1-nu)*L**2/4-(1-3*nu)*X**2-(3-nu)*Y**2)/(16*R**2)
     strain['yy'] = ((1-nu)*L**2/4-(1-3*nu)*Y**2-(3-nu)*X**2)/(16*R**2)
     strain['xy'] = (1+nu)/(8*R**2)*X*Y
+    strain['xy'] = strain['yx']
+
+    strain['rr'] = 1/(16*R**2)*((1-nu)*L**2/4-(1-3*nu)*(X**2+Y**2))
+    strain['phiphi'] = 1/(16*R**2)*((1-nu)*L**2/4-(3-nu)*(X**2+Y**2))
+    strain['rphi'] = np.zeros(X.shape)
+    strain['phir'] = strain['rphi']
 
     strain['zz'] = nu/(4*R**2)*(X**2+Y**2-L**2/8)
 

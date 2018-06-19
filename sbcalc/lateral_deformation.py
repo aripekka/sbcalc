@@ -94,9 +94,9 @@ def anisotropic_circular(R,L,S):
 
     D = 1/(2*R**2*(3*(S[0,0]+S[1,1])+2*S[0,1]+S[5,5]))
 
-    stress['xx'] = D*(L**2/4-x**2-3*y**2)
-    stress['yy'] = D*(L**2/4-3*x**2-y**2)
-    stress['xy'] = np.zeros(X.shape)
+    stress['xx'] = D*(L**2/4-X**2-3*Y**2)
+    stress['yy'] = D*(L**2/4-3*X**2-Y**2)
+    stress['xy'] = 2*D*X*Y
     stress['yx'] = stress['xy']
 
     stress['rr'] = D*(L**2/4-r_squared)
